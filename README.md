@@ -1,4 +1,4 @@
-# tmcore-base-classlib
+# tmcore-classlib
 Task management core functionality - Currently developing this in Netbeans IDE 8.0.2
 
 This is meant as a base class library for the following feature points:
