@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="CommunicationInterface">
+  <ClassDiagramComponents>
+    <Class name="Connection" package="" visibility="public" xPosition="119.0" yPosition="102.0">
+      <Fields>
+        <Field name="connectStatus" type="ConnectionStatus" visibility="private"/>
+        <Field name="ip" type="String" visibility="private"/>
+        <Field name="port" type="String" visibility="private"/>
+        <Field name="buffer" type="StringBuffer" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="connect" returnType="String" visibility="public">
+          <Argument type="String" name="ip"/>
+          <Argument type="String" name="port"/>
+        </Method>
+        <Method name="send" returnType="String" visibility="public">
+          <Argument type="String" name="message"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Enum name="ConnectionStatus" package="" visibility="public" xPosition="579.0" yPosition="60.0">
+      <Literals>
+        <Literal name="WORKING"/>
+        <Literal name="INVALIDATED"/>
+        <Literal name="IDLE"/>
+        <Literal name="FAILED"/>
+      </Literals>
+    </Enum>
+    <Enum name="MessageFlag" package="" visibility="public" xPosition="609.0" yPosition="304.0">
+      <Literals>
+        <Literal name="ACK"/>
+        <Literal name="NACK"/>
+        <Literal name="ECHO"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

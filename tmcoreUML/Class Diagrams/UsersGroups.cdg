@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="UsersGroups">
+  <ClassDiagramComponents>
+    <Class name="User" package="tmcore.users" visibility="public" xPosition="169.0" yPosition="303.0">
+      <Fields>
+        <Field name="id" type="long" visibility="protected"/>
+        <Field name="name" type="String" visibility="protected"/>
+        <Field name="manager" type="UserManager" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="UserManager" name="mgr"/>
+        </Constructor>
+        <Constructor visibility="protected"/>
+      </Constructors>
+      <Methods>
+        <Method name="getID" returnType="long" visibility="public"/>
+        <Method name="untitledMethod" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Group" package="tmcore.users" visibility="public" xPosition="604.0" yPosition="303.0">
+      <Fields>
+        <Field name="users" type="ArrayList&lt;Long&gt;" visibility="protected"/>
+        <Field name="id" type="long" visibility="protected"/>
+        <Field name="manager" type="UserManager" visibility="protected"/>
+        <Field name="name" type="String" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="UserManager" name="mgr"/>
+          <Argument type="User[]" name="users"/>
+        </Constructor>
+        <Constructor visibility="protected"/>
+      </Constructors>
+      <Methods>
+        <Method name="getUsers" returnType="User[]" visibility="public"/>
+        <Method name="getID" returnType="long" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="UserManager" package="tmcore.users" visibility="public" xPosition="338.0" yPosition="22.0">
+      <Methods>
+        <Method name="getNewID" returnType="long" visibility="public"/>
+        <Method name="getUser" returnType="long" visibility="public">
+          <Argument type="long" name="id"/>
+        </Method>
+        <Method name="getGroup" returnType="long" visibility="public">
+          <Argument type="long" name="id"/>
+        </Method>
+        <Method name="getUserGroups" returnType="long[]" visibility="public">
+          <Argument type="long" name="userID"/>
+        </Method>
+        <Method name="getUserGroupNames" returnType="String[]" visibility="public">
+          <Argument type="long" name="userID"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation name="manager" source="tmcore.users.Group" target="tmcore.users.UserManager" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <UseRelation name="manager" source="tmcore.users.User" target="tmcore.users.UserManager" sourceCardinality="1..*" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
