@@ -24,5 +24,5 @@
 * The need to group users together into a logical unit that can be used as a means to reference, and to assign blanket policies to, multiple users
 
 **Future Developments**
-* Development of expansion framwork as a means of extending the capability of the base functions *(separate module)*
+* Development of expansion framework as a means of extending the capability of the base functions *(separate module)*
 * Allow Admin class users to create, require, and apply custom 'Capability' tokens to expansions as a means of extending and revoking a user or group's ability to use it.

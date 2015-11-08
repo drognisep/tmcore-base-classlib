@@ -2,39 +2,110 @@
 
 <ClassDiagram name="CommunicationInterface">
   <ClassDiagramComponents>
-    <Class name="Connection" package="" visibility="public" xPosition="119.0" yPosition="102.0">
+    <Class name="CommunicationManager" package="tmcore.communication" visibility="public" xPosition="26.0" yPosition="29.0">
       <Fields>
-        <Field name="connectStatus" type="ConnectionStatus" visibility="private"/>
-        <Field name="ip" type="String" visibility="private"/>
-        <Field name="port" type="String" visibility="private"/>
-        <Field name="buffer" type="StringBuffer" visibility="private"/>
+        <Field name="connectStatus" type="ConnectionStatus" visibility="protected"/>
+        <Field name="ip" type="InetSocketAddress" visibility="protected"/>
+        <Field name="queue" type="Queue&lt;Notification&gt;" visibility="protected"/>
+        <Field name="status" type="ConnectionStatus" visibility="protected"/>
+        <Field name="registry" type="List&lt;SystemListener&gt;" visibility="protected"/>
+        <Field name="instance" type="CommunicationManager" visibility="private" isStatic="true"/>
+        <Field name="mcConnection" type="MulticastSocket" visibility="protected"/>
+        <Field name="dgConnection" type="DatagramSocket" visibility="protected"/>
+        <Field name="skConnection" type="Socket" visibility="protected"/>
+        <Field name="mcConnectionStatus" type="ConnectionStatus" visibility="protected"/>
+        <Field name="dgConnectionStatus" type="ConnectionStatus" visibility="protected"/>
+        <Field name="skConnectionStatus" type="ConnectionStatus" visibility="protected"/>
       </Fields>
-      <Constructors/>
+      <Constructors>
+        <Constructor visibility="protected"/>
+      </Constructors>
       <Methods>
-        <Method name="connect" returnType="String" visibility="public">
-          <Argument type="String" name="ip"/>
-          <Argument type="String" name="port"/>
+        <Method name="register" returnType="SystemListener" visibility="public">
+          <Argument type="SystemListener" name="listener"/>
         </Method>
-        <Method name="send" returnType="String" visibility="public">
-          <Argument type="String" name="message"/>
+        <Method name="getInstance" returnType="CommunicationManager" visibility="public"/>
+        <Method name="getStatus" returnType="ConnectionStatus" visibility="public"/>
+        <Method name="connect" returnType="InetSocketAddress" visibility="public">
+          <Argument type="InetSocketAddress" name="adrs"/>
+        </Method>
+        <Method name="getAddress" returnType="InetSocketAddress" visibility="public"/>
+        <Method name="postUDP" returnType="Notification" visibility="public">
+          <Argument type="Notification" name="note"/>
+        </Method>
+        <Method name="postTCP" returnType="Notification" visibility="public">
+          <Argument type="Notification" name="note"/>
         </Method>
       </Methods>
     </Class>
-    <Enum name="ConnectionStatus" package="" visibility="public" xPosition="579.0" yPosition="60.0">
+    <Class name="Notification" package="tmcore.communication" visibility="public" isFinal="true" xPosition="26.0" yPosition="786.0">
+      <Fields>
+        <Field name="srcID" type="long" visibility="private"/>
+        <Field name="dstID" type="long" visibility="private"/>
+        <Field name="flag" type="MessageFlag" visibility="private"/>
+        <Field name="sysID" type="String" visibility="private"/>
+        <Field name="payload" type="byte[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="private">
+          <Argument type="byte[]" name="data"/>
+          <Argument type="long" name="sourceID"/>
+          <Argument type="long" name="destID"/>
+          <Argument type="MessageFlag" name="flag"/>
+          <Argument type="String" name="subSysSource"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="byte[]" name="data"/>
+          <Argument type="SystemListener" name="source"/>
+          <Argument type="long" name="destID"/>
+          <Argument type="MessageFlag" name="flag"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="long" name="sourceID"/>
+          <Argument type="long" name="destID"/>
+          <Argument type="MessageFlag" name="flag"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getSource" returnType="long" visibility="public"/>
+        <Method name="getTarget" returnType="long" visibility="public"/>
+        <Method name="getFlag" returnType="Message" visibility="public"/>
+        <Method name="getSubSystemID" returnType="String" visibility="public"/>
+        <Method name="createReply" returnType="MessageFlag" visibility="public">
+          <Argument type="byte[]" name="data"/>
+          <Argument type="Notification" name="original"/>
+          <Argument type="MessageFlag" name="flag"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="SystemListener" package="tmcore.communication" visibility="public" xPosition="26.0" yPosition="538.0">
+      <Methods>
+        <Method name="getSubSystemID" returnType="String" visibility="public"/>
+        <Method name="post" returnType="Notification" visibility="public">
+          <Argument type="Notification" name="note"/>
+        </Method>
+        <Method name="getOwner" returnType="long" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Enum name="ConnectionStatus" package="tmcore.communication" visibility="public" xPosition="383.0" yPosition="29.0">
       <Literals>
-        <Literal name="WORKING"/>
-        <Literal name="INVALIDATED"/>
-        <Literal name="IDLE"/>
-        <Literal name="FAILED"/>
+        <Literal name="DISCONNECTED"/>
+        <Literal name="CONNECTED"/>
+        <Literal name="ERROR"/>
       </Literals>
     </Enum>
-    <Enum name="MessageFlag" package="" visibility="public" xPosition="609.0" yPosition="304.0">
+    <Enum name="MessageFlag" package="tmcore.communication" visibility="public" xPosition="605.0" yPosition="786.0">
       <Literals>
         <Literal name="ACK"/>
         <Literal name="NACK"/>
-        <Literal name="ECHO"/>
+        <Literal name="POST"/>
+        <Literal name="UPDATE"/>
+        <Literal name="GET"/>
       </Literals>
     </Enum>
   </ClassDiagramComponents>
-  <ClassDiagramRelations/>
+  <ClassDiagramRelations>
+    <UseRelation name="" source="tmcore.communication.CommunicationManager" target="tmcore.communication.SystemListener" sourceCardinality="1..1" targetCardinality="0..*"/>
+  </ClassDiagramRelations>
 </ClassDiagram>

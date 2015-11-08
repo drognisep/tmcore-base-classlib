@@ -2,11 +2,12 @@
 
 <ClassDiagram name="UsersGroups">
   <ClassDiagramComponents>
-    <Class name="User" package="tmcore.users" visibility="public" xPosition="169.0" yPosition="303.0">
+    <Class name="User" package="tmcore.users" visibility="public" xPosition="32.0" yPosition="456.0">
       <Fields>
         <Field name="id" type="long" visibility="protected"/>
         <Field name="name" type="String" visibility="protected"/>
         <Field name="manager" type="UserManager" visibility="protected"/>
+        <Field name="userClass" type="String" visibility="private"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public">
@@ -17,9 +18,10 @@
       <Methods>
         <Method name="getID" returnType="long" visibility="public"/>
         <Method name="untitledMethod" returnType="void" visibility="public"/>
+        <Method name="getUserClass" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Group" package="tmcore.users" visibility="public" xPosition="604.0" yPosition="303.0">
+    <Class name="Group" package="tmcore.users" visibility="public" xPosition="320.0" yPosition="456.0">
       <Fields>
         <Field name="users" type="ArrayList&lt;Long&gt;" visibility="protected"/>
         <Field name="id" type="long" visibility="protected"/>
@@ -38,8 +40,20 @@
         <Method name="getID" returnType="long" visibility="public"/>
       </Methods>
     </Class>
-    <Interface name="UserManager" package="tmcore.users" visibility="public" xPosition="338.0" yPosition="22.0">
+    <Class name="UserManager" package="tmcore.users" visibility="public" isFinal="true" xPosition="32.0" yPosition="11.0">
+      <Fields>
+        <Field name="latestUID" type="long" visibility="protected"/>
+        <Field name="latestGID" type="long" visibility="protected"/>
+        <Field name="users" type="List&lt;User&gt;" visibility="private"/>
+        <Field name="groups" type="List&lt;Group&gt;" visibility="private"/>
+        <Field name="instance" type="UserManager" visibility="private" isStatic="true"/>
+        <Field name="_inner_class_" type="AuthorizationManager" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="protected"/>
+      </Constructors>
       <Methods>
+        <Method name="getInstance" returnType="UserManager" visibility="public" isStatic="true"/>
         <Method name="getNewID" returnType="long" visibility="public"/>
         <Method name="getUser" returnType="long" visibility="public">
           <Argument type="long" name="id"/>
@@ -47,17 +61,25 @@
         <Method name="getGroup" returnType="long" visibility="public">
           <Argument type="long" name="id"/>
         </Method>
-        <Method name="getUserGroups" returnType="long[]" visibility="public">
+        <Method name="getUserGroups" returnType="long" visibility="public">
           <Argument type="long" name="userID"/>
         </Method>
-        <Method name="getUserGroupNames" returnType="String[]" visibility="public">
+        <Method name="getUserGroupNames" returnType="long" visibility="public">
           <Argument type="long" name="userID"/>
+        </Method>
+        <Method name="userClassExists" returnType="String" visibility="public">
+          <Argument type="String" name="userClass"/>
+        </Method>
+        <Method name="userClassCanPerform" returnType="String" visibility="public">
+          <Argument type="String" name="userClass"/>
+          <Argument type="String" name="action"/>
         </Method>
       </Methods>
-    </Interface>
+    </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
     <UseRelation name="manager" source="tmcore.users.Group" target="tmcore.users.UserManager" sourceCardinality="1..*" targetCardinality="1..1"/>
-    <UseRelation name="manager" source="tmcore.users.User" target="tmcore.users.UserManager" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <HasRelation name="users" source="tmcore.users.UserManager" target="tmcore.users.User" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
+    <HasRelation name="groups" source="tmcore.users.UserManager" target="tmcore.users.Group" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
   </ClassDiagramRelations>
 </ClassDiagram>
