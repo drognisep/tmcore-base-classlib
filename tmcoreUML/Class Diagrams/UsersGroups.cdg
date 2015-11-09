@@ -2,31 +2,28 @@
 
 <ClassDiagram name="UsersGroups">
   <ClassDiagramComponents>
-    <Class name="User" package="tmcore.users" visibility="public" xPosition="32.0" yPosition="456.0">
+    <Class name="User" package="tmcore.users" visibility="public" xPosition="33.0" yPosition="519.0">
       <Fields>
         <Field name="id" type="long" visibility="protected"/>
         <Field name="name" type="String" visibility="protected"/>
-        <Field name="manager" type="UserManager" visibility="protected"/>
-        <Field name="userClass" type="String" visibility="private"/>
+        <Field name="userClass" type="String" visibility="protected"/>
       </Fields>
       <Constructors>
-        <Constructor visibility="public">
-          <Argument type="UserManager" name="mgr"/>
-        </Constructor>
-        <Constructor visibility="protected"/>
+        <Constructor visibility="package"/>
       </Constructors>
       <Methods>
         <Method name="getID" returnType="long" visibility="public"/>
-        <Method name="untitledMethod" returnType="void" visibility="public"/>
-        <Method name="getUserClass" returnType="String" visibility="public"/>
+        <Method name="setUserName" returnType="void" visibility="public">
+          <Argument type="String" name="username"/>
+        </Method>
       </Methods>
     </Class>
-    <Class name="Group" package="tmcore.users" visibility="public" xPosition="320.0" yPosition="456.0">
+    <Class name="Group" package="tmcore.users" visibility="public" xPosition="309.0" yPosition="519.0">
       <Fields>
         <Field name="users" type="ArrayList&lt;Long&gt;" visibility="protected"/>
         <Field name="id" type="long" visibility="protected"/>
-        <Field name="manager" type="UserManager" visibility="protected"/>
         <Field name="name" type="String" visibility="protected"/>
+        <Field name="groupLeader" type="long" visibility="protected"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public">
@@ -37,49 +34,121 @@
       </Constructors>
       <Methods>
         <Method name="getUsers" returnType="User[]" visibility="public"/>
-        <Method name="getID" returnType="long" visibility="public"/>
+        <Method name="getID" returnType="long" visibility="public" isFinal="true"/>
+        <Method name="getGroupLeader" returnType="User" visibility="public" isFinal="true"/>
+        <Method name="getName" returnType="String" visibility="public" isFinal="true"/>
+        <Method name="getGroupUserClass" returnType="String" visibility="public" isFinal="true"/>
+        <Method name="hasUser" returnType="boolean" visibility="public">
+          <Argument type="long" name="userID"/>
+        </Method>
       </Methods>
     </Class>
-    <Class name="UserManager" package="tmcore.users" visibility="public" isFinal="true" xPosition="32.0" yPosition="11.0">
+    <Class name="UserManager" package="tmcore.users" visibility="public" isFinal="true" xPosition="112.0" yPosition="11.0">
       <Fields>
         <Field name="latestUID" type="long" visibility="protected"/>
         <Field name="latestGID" type="long" visibility="protected"/>
         <Field name="users" type="List&lt;User&gt;" visibility="private"/>
         <Field name="groups" type="List&lt;Group&gt;" visibility="private"/>
         <Field name="instance" type="UserManager" visibility="private" isStatic="true"/>
-        <Field name="_inner_class_" type="AuthorizationManager" visibility="private"/>
+        <Field name="currentUser" type="User" visibility="private" isStatic="true"/>
       </Fields>
       <Constructors>
         <Constructor visibility="protected"/>
       </Constructors>
       <Methods>
-        <Method name="getInstance" returnType="UserManager" visibility="public" isStatic="true"/>
-        <Method name="getNewID" returnType="long" visibility="public"/>
-        <Method name="getUser" returnType="long" visibility="public">
+        <Method name="instance" returnType="UserManager" visibility="public" isStatic="true"/>
+        <Method name="getNewUser" returnType="User" visibility="public">
+          <Argument type="String" name="userClass"/>
+        </Method>
+        <Method name="getUser" returnType="User" visibility="public">
           <Argument type="long" name="id"/>
         </Method>
-        <Method name="getGroup" returnType="long" visibility="public">
+        <Method name="getGroup" returnType="Group" visibility="public">
           <Argument type="long" name="id"/>
         </Method>
-        <Method name="getUserGroups" returnType="long" visibility="public">
+        <Method name="getUserGroups" returnType="Group[]" visibility="public">
           <Argument type="long" name="userID"/>
         </Method>
-        <Method name="getUserGroupNames" returnType="long" visibility="public">
+        <Method name="getUserGroupNames" returnType="String[]" visibility="public">
           <Argument type="long" name="userID"/>
         </Method>
+        <Method name="getCurrentUser" returnType="User" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AuthorizationManager" package="tmcore.users" visibility="public" isFinal="true" xPosition="559.0" yPosition="11.0">
+      <Fields>
+        <Field name="userClasses" type="List&lt;UserClass&gt;" visibility="private"/>
+        <Field name="registeredUsers" type="Map&lt;Long&gt;" visibility="private"/>
+        <Field name="instance" type="AuthorizationManager" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
         <Method name="userClassExists" returnType="String" visibility="public">
           <Argument type="String" name="userClass"/>
         </Method>
         <Method name="userClassCanPerform" returnType="String" visibility="public">
           <Argument type="String" name="userClass"/>
+          <Argument type="String" name="userAction"/>
+        </Method>
+        <Method name="getUserClass" returnType="String" visibility="public">
+          <Argument type="long" name="userID"/>
+        </Method>
+        <Method name="getDefaultClasses" returnType="String[]" visibility="public"/>
+        <Method name="instance" returnType="AuthorizationManager" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="UserClass" package="tmcore.users" visibility="package" xPosition="953.0" yPosition="303.0">
+      <Fields>
+        <Field name="userClass" type="String" visibility="private"/>
+        <Field name="userActions" type="List&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="package">
+          <Argument type="String" name="userClass"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getUserClass" returnType="String" visibility="public"/>
+        <Method name="addAction" returnType="String" visibility="public">
+          <Argument type="User" name="assertingUser"/>
+          <Argument type="String" name="action"/>
+        </Method>
+        <Method name="rmvAction" returnType="String" visibility="public">
+          <Argument type="User" name="assertingUser"/>
           <Argument type="String" name="action"/>
         </Method>
       </Methods>
     </Class>
+    <Class name="GeneralUserClass" package="tmcore.users" visibility="package" xPosition="1267.0" yPosition="565.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="SupportUserClass" package="tmcore.users" visibility="package" xPosition="1109.0" yPosition="565.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="AdminUserClass" package="tmcore.users" visibility="package" xPosition="953.0" yPosition="565.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="SuperUserClass" package="tmcore.users" visibility="package" xPosition="795.0" yPosition="565.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <UseRelation name="manager" source="tmcore.users.Group" target="tmcore.users.UserManager" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <IsRelation name="is" source="tmcore.users.SuperUserClass" target="tmcore.users.UserClass"/>
+    <IsRelation name="is" source="tmcore.users.AdminUserClass" target="tmcore.users.UserClass"/>
     <HasRelation name="users" source="tmcore.users.UserManager" target="tmcore.users.User" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
+    <IsRelation name="is" source="tmcore.users.GeneralUserClass" target="tmcore.users.UserClass"/>
+    <IsRelation name="is" source="tmcore.users.SupportUserClass" target="tmcore.users.UserClass"/>
     <HasRelation name="groups" source="tmcore.users.UserManager" target="tmcore.users.Group" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
+    <HasRelation name="userClasses" source="tmcore.users.AuthorizationManager" target="tmcore.users.UserClass" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
   </ClassDiagramRelations>
 </ClassDiagram>

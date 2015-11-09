@@ -47,7 +47,7 @@
         <Field name="payload" type="byte[]" visibility="private"/>
       </Fields>
       <Constructors>
-        <Constructor visibility="private">
+        <Constructor visibility="public">
           <Argument type="byte[]" name="data"/>
           <Argument type="long" name="sourceID"/>
           <Argument type="long" name="destID"/>
@@ -70,7 +70,7 @@
       <Methods>
         <Method name="getSource" returnType="long" visibility="public"/>
         <Method name="getTarget" returnType="long" visibility="public"/>
-        <Method name="getFlag" returnType="Message" visibility="public"/>
+        <Method name="getFlag" returnType="MessageFlag" visibility="public"/>
         <Method name="getSubSystemID" returnType="String" visibility="public"/>
         <Method name="createReply" returnType="MessageFlag" visibility="public">
           <Argument type="byte[]" name="data"/>
