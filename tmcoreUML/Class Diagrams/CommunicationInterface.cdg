@@ -8,7 +8,7 @@
         <Field name="ip" type="InetSocketAddress" visibility="protected"/>
         <Field name="queue" type="Queue&lt;Notification&gt;" visibility="protected"/>
         <Field name="status" type="ConnectionStatus" visibility="protected"/>
-        <Field name="registry" type="List&lt;SystemListener&gt;" visibility="protected"/>
+        <Field name="registry" type="ArrayList&lt;SystemListener&gt;" visibility="protected"/>
         <Field name="instance" type="CommunicationManager" visibility="private" isStatic="true"/>
         <Field name="mcConnection" type="MulticastSocket" visibility="protected"/>
         <Field name="dgConnection" type="DatagramSocket" visibility="protected"/>
@@ -26,7 +26,7 @@
         </Method>
         <Method name="getInstance" returnType="CommunicationManager" visibility="public"/>
         <Method name="getStatus" returnType="ConnectionStatus" visibility="public"/>
-        <Method name="connect" returnType="InetSocketAddress" visibility="public">
+        <Method name="connect" returnType="CommunicationManager" visibility="public">
           <Argument type="InetSocketAddress" name="adrs"/>
         </Method>
         <Method name="getAddress" returnType="InetSocketAddress" visibility="public"/>
@@ -88,7 +88,7 @@
         <Method name="getOwner" returnType="long" visibility="public"/>
       </Methods>
     </Interface>
-    <Enum name="ConnectionStatus" package="tmcore.communication" visibility="public" xPosition="383.0" yPosition="29.0">
+    <Enum name="ConnectionStatus" package="tmcore.communication" visibility="public" xPosition="447.0" yPosition="29.0">
       <Literals>
         <Literal name="DISCONNECTED"/>
         <Literal name="CONNECTED"/>
