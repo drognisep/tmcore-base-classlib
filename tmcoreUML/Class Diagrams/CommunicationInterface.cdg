@@ -18,23 +18,31 @@
         <Field name="skConnectionStatus" type="ConnectionStatus" visibility="protected"/>
       </Fields>
       <Constructors>
-        <Constructor visibility="protected"/>
+        <Constructor visibility="package"/>
       </Constructors>
       <Methods>
-        <Method name="register" returnType="SystemListener" visibility="public">
+        <Method name="register" returnType="void" visibility="public">
           <Argument type="SystemListener" name="listener"/>
         </Method>
         <Method name="getInstance" returnType="CommunicationManager" visibility="public"/>
-        <Method name="getStatus" returnType="ConnectionStatus" visibility="public"/>
-        <Method name="connect" returnType="CommunicationManager" visibility="public">
+        <Method name="getStatus" returnType="ConnectionStatus" visibility="public">
+          <Argument type="ConnectionType" name="type"/>
+        </Method>
+        <Method name="connect" returnType="void" visibility="public">
           <Argument type="InetSocketAddress" name="adrs"/>
         </Method>
-        <Method name="getAddress" returnType="InetSocketAddress" visibility="public"/>
+        <Method name="getAddress" returnType="InetSocketAddress" visibility="public">
+          <Argument type="ConnectionType" name="type"/>
+        </Method>
         <Method name="postUDP" returnType="Notification" visibility="public">
           <Argument type="Notification" name="note"/>
         </Method>
         <Method name="postTCP" returnType="Notification" visibility="public">
           <Argument type="Notification" name="note"/>
+        </Method>
+        <Method name="connect" returnType="void" visibility="public">
+          <Argument type="InetSocketAddress" name="adrs"/>
+          <Argument type="ConnectionType" name="type"/>
         </Method>
       </Methods>
     </Class>
@@ -102,6 +110,14 @@
         <Literal name="POST"/>
         <Literal name="UPDATE"/>
         <Literal name="GET"/>
+      </Literals>
+    </Enum>
+    <Enum name="ConnectionType" package="tmcore.communication" visibility="public" xPosition="447.0" yPosition="208.0">
+      <Literals>
+        <Literal name="TCP"/>
+        <Literal name="UDP"/>
+        <Literal name="MULTI"/>
+        <Literal name="NONE"/>
       </Literals>
     </Enum>
   </ClassDiagramComponents>
