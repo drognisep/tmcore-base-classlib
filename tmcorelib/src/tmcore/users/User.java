@@ -2,38 +2,36 @@ package tmcore.users;
 
 public class User {
 
-    protected long id;
+  protected int id;
 
-    protected String name;
+  protected String name;
 
-    protected String userClass;
+  protected String userClass;
 
-    User(String name, long userID) {
-    }
+  User() {
+  }
 
-    User(String name, long userID, String userClass) {
-    }
+  User(String name, int userID) {
+  }
 
-    protected User() {
-    }
+  User(String name, int userID, String userClass) {
+  }
 
-    public long getID() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public int getID() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    public String setUserName(String userName) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public void setUserName(String userName) {
+  }
 
-    public String getUserName() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public String getUserName() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    public String setUserClass(String userClass) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public void setUserClass(String userClass) {
+  }
 
-    public String getUserClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public String getUserClass() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 }

@@ -1,55 +1,48 @@
 package tmcore.users;
 
+import java.util.ArrayList;
+
 public class Group {
 
-    protected java.util.ArrayList<Long> users;
+  protected ArrayList<Integer> _users;
 
-    protected long groupID;
+  protected int groupID;
 
-    protected long leaderID;
+  protected int leaderID;
 
-    protected String groupName;
+  protected String groupName;
 
-    Group(String name, long groupID) {
-    }
+  Group(String name, int groupID) {
+  }
 
-    Group(String name, long groupID, long leaderID) {
-    }
+  Group(String name, int groupID, int leaderID) {
+  }
 
-    protected Group() {
-    }
+  Group() {
+  }
 
-    public long add(long userID) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public boolean add(int userID) {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    public long remove(long userID) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public void remove(int userID) {
+  }
 
-    public long[] users() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public int[] getUserIDs() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    public long get(long userID) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public void setLeader(int userID) {
+  }
 
-    public long setLeader(long userID) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public int getLeaderID() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    public User getLeader() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public String getGroupName() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    public String getGroupName() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String setGroupName(String groupName) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    protected ArrayList<Long> users;
+  public void setGroupName(String groupName) {
+  }
 }

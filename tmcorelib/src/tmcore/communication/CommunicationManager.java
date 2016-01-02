@@ -1,6 +1,14 @@
 package tmcore.communication;
 
-public class CommunicationManager {
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Queue;
+
+public class CommunicationManager implements java.io.Serializable{
+  private static final long serialVersionUID = -5301094609626301353L;
 
     protected ConnectionStatus connectStatus;
 
@@ -26,10 +34,10 @@ public class CommunicationManager {
 
     protected ConnectionStatus skConnectionStatus;
 
-    protected CommunicationManager() {
+    CommunicationManager() {
     }
 
-    public SystemListener register(SystemListener listener) {
+    public void register(SystemListener listener) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -37,23 +45,27 @@ public class CommunicationManager {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ConnectionStatus getStatus() {
+    public ConnectionStatus getStatus(ConnectionType type) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public CommunicationManager connect(InetSocketAddress adrs) {
+    public void connect(InetSocketAddress adrs) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void connect(InetSocketAddress adrs, ConnectionType type) {
+      throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public InetSocketAddress getAddress(ConnectionType type) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public InetSocketAddress getAddress() {
+    public void postUDP(Notification note) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Notification postUDP(Notification note) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Notification postTCP(Notification note) {
+    public void postTCP(Notification note) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
