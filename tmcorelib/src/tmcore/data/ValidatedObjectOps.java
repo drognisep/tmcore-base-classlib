@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -25,7 +27,7 @@ import java.util.zip.Inflater;
  * changes to important files.
  * @author Doug Saylor <josephdsaylor@gmail.com>
  */
-public class ValidatedObjectStream {
+public class ValidatedObjectOps {
   public static final int VBUF_SIZE = 32;
   public static final int COMPRESSION_LVL = 9;
   public static final boolean COMPRESSION_DEBUG = false;
@@ -35,13 +37,13 @@ public class ValidatedObjectStream {
   protected byte[] oBuf;
   protected ValidatedObject vObj;
   
-  public ValidatedObjectStream() {
+  public ValidatedObjectOps() {
     vObj = null;
     vBuf = new byte[VBUF_SIZE];
     oBuf = null;
   }
   
-  public ValidatedObjectStream(ValidatedObject vo) throws 
+  public ValidatedObjectOps(ValidatedObject vo) throws 
       ObjectInvalidException, IOException {
     this();
     
@@ -69,9 +71,9 @@ public class ValidatedObjectStream {
   
   /**
    * Returns a clone of the already loaded ValidatedObject.
-   * The object is cloned so that ValidatedObjectStream can retain an initial
-   * loaded state of the object. Will throw an IllegalStateException if no
-   * ValidatedObject is loaded.
+   * The object is cloned so that ValidatedObjectOps can retain an initial
+ loaded state of the object. Will throw an IllegalStateException if no
+ ValidatedObject is loaded.
    * @return cloned ValidatedObject
    */
   public final ValidatedObject getValidatedObject() {
@@ -331,9 +333,9 @@ public class ValidatedObjectStream {
 //   * @throws CloneNotSupportedException
 //   */
 //  public static void main(String[] args) throws IOException, ObjectInvalidException, FileInvalidException, CloneNotSupportedException {
-//    String testFileName = "ValidatedObjectStream.FileIO.test.txt";
+//    String testFileName = "ValidatedObjectOps.FileIO.test.txt";
 //    
-//    ValidatedObjectStream vos = new ValidatedObjectStream();
+//    ValidatedObjectOps vos = new ValidatedObjectOps();
 //    PassData pData = new PassData();
 //    pData.push("Doug", "3141592654");
 //    Validator val = pData.getValidator(), val2;
@@ -341,7 +343,7 @@ public class ValidatedObjectStream {
 //    vos.load(pData);
 //    
 //    if(DEBUG) {
-//      System.out.println("[DEBUG] Printing ValidatedObjectStream "
+//      System.out.println("[DEBUG] Printing ValidatedObjectOps "
 //          + "statistics:");
 //      System.out.println("  oBuf.length = " + vos.oBuf.length);
 //      System.out.println("  vBuf.length = " + vos.vBuf.length);
@@ -365,11 +367,11 @@ public class ValidatedObjectStream {
 //    }
 //    
 //    vos.write(testFileName);
-//    vos = new ValidatedObjectStream();
+//    vos = new ValidatedObjectOps();
 //    vos.read(testFileName);
 //    
 //    if(DEBUG) {
-//      System.out.println("[DEBUG] Printing File ValidatedObjectStream "
+//      System.out.println("[DEBUG] Printing File ValidatedObjectOps "
 //          + "statistics:");
 //      System.out.println("  oBuf.length = " + vos.oBuf.length);
 //      System.out.println("  vBuf.length = " + vos.vBuf.length);
@@ -401,7 +403,7 @@ public class ValidatedObjectStream {
     return vb;
   }
   
-  public ValidatedObjectStream importData(ValidatedBuffer vb) throws 
+  public ValidatedObjectOps importData(ValidatedBuffer vb) throws 
       ObjectInvalidException {
     byte[] vTmp, oTmp;
     ValidatedObject vo;
@@ -425,5 +427,19 @@ public class ValidatedObjectStream {
           + "aborting.");
     }
     return this;
+  }
+  
+  public static byte[] glueArrays(byte[]... arrays) {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    
+    for(byte[] a : arrays) { 
+      try {
+        bos.write(a);
+      } catch (IOException ex) {
+        Logger.getLogger(ValidatedObjectOps.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return bos.toByteArray();
   }
 }

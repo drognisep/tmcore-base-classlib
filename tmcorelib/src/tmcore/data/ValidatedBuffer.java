@@ -20,7 +20,6 @@ public class ValidatedBuffer implements ValidatedObject, Queue {
   
   public ValidatedBuffer() {
     buffer = new ArrayList<>();
-    updateValidator();
   }
   
   public ValidatedBuffer(byte[] bs) {

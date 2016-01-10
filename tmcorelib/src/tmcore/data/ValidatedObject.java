@@ -64,6 +64,15 @@ public interface ValidatedObject extends java.io.Serializable,
     return dataBytes;
   }
   
+  public default byte[] toValidatedByteArray() throws IOException {
+    byte[] dataBytes = this.toByteArray();
+    Validator val = Validator.fromByteArray(dataBytes);
+    byte[] valBytes = val.toByteArray();
+    ValidatedBuffer vb = new ValidatedBuffer();
+    return ValidatedObjectOps.compress(ValidatedObjectOps.glueArrays(valBytes, 
+        dataBytes));
+  }
+  
   public static ValidatedObject fromByteArray(byte[] data) {
     if(data.length == 0) throw new IllegalArgumentException("Empty byte "
         + "array");
@@ -84,6 +93,24 @@ public interface ValidatedObject extends java.io.Serializable,
     }
     
     return vo;
+  }
+  
+  public static ValidatedObject fromValidatedByteArray(byte[] data) throws 
+      ObjectInvalidException {
+    byte[] decomAry = ValidatedObjectOps.decompress(data);
+    byte[] dataAry = new byte[decomAry.length - Validator.SHA256_ARYSZ];
+    byte[] valAry = new byte[Validator.SHA256_ARYSZ];
+    ValidatedObject vo;
+    
+    System.arraycopy(decomAry, 0, valAry, 0, Validator.SHA256_ARYSZ);
+    System.arraycopy(decomAry, Validator.SHA256_ARYSZ, dataAry, 0, 
+        decomAry.length);
+    vo = ValidatedObject.fromByteArray(dataAry);
+    
+    if(Validator.fromByteArray(valAry).equals(vo.getValidator())) return vo;
+    
+    throw new ObjectInvalidException("[ERROR]: Object read does not match its"
+        + "validator");
   }
   
   public default Validator getValidator() {

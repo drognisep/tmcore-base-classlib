@@ -12,17 +12,19 @@ import java.util.Objects;
  * @author Doug
  */
 public class Task {
-	String name, description;
-	State state;
+  long ID;
+	private String name, description;
+	private State state;
 	
 	public enum State {
 		NONE("<None>", 0),
 		CREATED("New", 1),
-		AVAILABLE("Available", 2),
-		ACTIVE("In Progress", 3),
-		REVIEW("Under Review", 4),
-		ACCEPTED("Accepted", 5),
-		COMPLETE("Completed", 6);
+    DELEGATED("Delegated", 2),
+		AVAILABLE("Available", 3),
+		ACTIVE("In Progress", 4),
+		REVIEW("Under Review", 5),
+		ACCEPTED("Accepted", 6),
+		COMPLETE("Completed", 7);
 		
 		private final String strRep;
 		private final int ordinal;
@@ -45,6 +47,12 @@ public class Task {
     this(name, description, Task.State.CREATED);
   }
 	
+  /**
+   * Initializes the task with its basic information.
+   * @param name
+   * @param description
+   * @param state 
+   */
 	public Task(String name, String description, Task.State state) {
 		this();
 		this.name = name;
@@ -53,11 +61,43 @@ public class Task {
 	}
 	
 	public String getName() { return name; }
+  
+  /**
+   * Sets the task's name.
+   * @param name the new name for the task
+   */
   public void setName(String name) { this.name = name; }
+  
+  /**
+   * 
+   * @return the tasks's description
+   */
 	public String getDesc() { return description; }
+  
+  /**
+   * Sets the task's description to that set by <code>desc</code>.
+   * @param desc 
+   */
   public void setDesc(String desc) { this.description = desc; }
+  
+  /**
+   * Sets the state to that specified by <code>s</code>.
+   * @param s 
+   */
 	public void setState(Task.State s) { state = s; }
-	public Task.State getState() { return state; }
+	
+  /**
+   * 
+   * @return the current state
+   */
+  public Task.State getState() { return state; }
+  
+  /**
+   * @return the ID
+   */
+  public long getID() {
+    return ID;
+  }
   
   @Override
   public boolean equals(Object o) {
